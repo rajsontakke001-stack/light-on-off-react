@@ -1,0 +1,389 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+button {
+  font-family: inherit;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 16px;
+  overflow: hidden;
+  color: #f5f6fb;
+  background:
+    radial-gradient(ellipse at 50% 40%, #272d40 0%, transparent 48%),
+    #10131d;
+  transition: background 0.6s ease;
+}
+
+.app.light-on {
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      rgba(255, 199, 63, 0.18),
+      transparent 50%
+    ),
+    #171923;
+}
+
+.card {
+  width: 100%;
+  max-width: 430px;
+  padding: 27px 27px 23px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.018)
+  );
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+  animation: card-enter 0.7s ease both;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.top-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9ca6bb;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #626b7e;
+}
+
+.status-dot.active {
+  background: #ffdb65;
+  box-shadow: 0 0 12px #ffdb65;
+}
+
+h1 {
+  margin: 13px 0 5px;
+  color: #f6f7fb;
+  font-size: 32px;
+  letter-spacing: -1.5px;
+}
+
+h1 span {
+  color: #ffd75e;
+}
+
+.subtitle {
+  margin: 0;
+  color: #929caf;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.bulb-scene {
+  position: relative;
+  width: 280px;
+  height: 365px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 5px;
+}
+
+.bulb {
+  position: relative;
+  z-index: 2;
+  width: 240px;
+  height: 350px;
+  overflow: visible;
+  filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.2));
+}
+
+.glass {
+  stroke: #8490a5;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  transition: fill 0.45s ease, stroke 0.45s ease;
+}
+
+.light-on .glass {
+  stroke: #ffe28b;
+}
+
+.inner-light {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.glowing .inner-light {
+  opacity: 0.8;
+}
+
+.filament {
+  transition: stroke 0.4s ease;
+}
+
+.halo {
+  position: absolute;
+  z-index: 0;
+  width: 230px;
+  height: 230px;
+  top: 36px;
+  border-radius: 50%;
+  background: #ffd34e;
+  filter: blur(65px);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.glowing .halo {
+  opacity: 0.48;
+  transform: scale(1.2);
+  animation: halo-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes halo-pulse {
+  0%, 100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.rays {
+  position: absolute;
+  z-index: 1;
+  top: 42%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.glowing .rays {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.rays span {
+  position: absolute;
+  width: 4px;
+  height: 19px;
+  border-radius: 5px;
+  background: #ffdb65;
+  box-shadow: 0 0 12px #ffc94a;
+  transform: rotate(var(--angle)) translateY(-148px);
+  animation: ray-glow 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes ray-glow {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.bulb-shadow {
+  position: absolute;
+  bottom: 0;
+  width: 110px;
+  height: 13px;
+  border-radius: 50%;
+  background: #000;
+  filter: blur(9px);
+  opacity: 0.35;
+}
+
+.glowing .bulb {
+  animation: bulb-breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes bulb-breathe {
+  0%, 100% {
+    filter:
+      drop-shadow(0 18px 18px rgba(0, 0, 0, 0.2))
+      drop-shadow(0 0 5px rgba(255, 211, 78, 0.12));
+  }
+
+  50% {
+    filter:
+      drop-shadow(0 18px 18px rgba(0, 0, 0, 0.2))
+      drop-shadow(0 0 20px rgba(255, 211, 78, 0.3));
+  }
+}
+
+.control-panel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 19px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-caption {
+  color: #8d98ac;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.status strong {
+  color: #f5f6fb;
+  font-size: 17px;
+}
+
+.light-on .status strong {
+  color: #ffdf70;
+}
+
+.toggle {
+  min-width: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px 7px 8px;
+  color: #c4cada;
+  background: #222838;
+  border: 1px solid #3a4357;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.toggle:hover {
+  transform: translateY(-2px);
+}
+
+.toggle:active {
+  transform: scale(0.96);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid #ffd75e;
+  outline-offset: 4px;
+}
+
+.toggle-on {
+  color: #ffdf80;
+  background: #51431f;
+  border-color: #8f7330;
+}
+
+.toggle-track {
+  width: 36px;
+  height: 22px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  background: #10131d;
+  border-radius: 20px;
+  transition: background 0.3s ease;
+}
+
+.toggle-on .toggle-track {
+  background: #c79b2f;
+}
+
+.toggle-knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e4e8f0;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.toggle-on .toggle-knob {
+  transform: translateX(14px);
+  background: #fff7d8;
+}
+
+.footer-text {
+  margin: 15px 0 0;
+  color: #747e92;
+  font-size: 10px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 16px 12px;
+  }
+
+  .card {
+    padding: 24px 18px 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .bulb-scene {
+    transform: scale(0.9);
+    margin: -5px 0 -12px;
+  }
+
+  .control-panel {
+    gap: 8px;
+  }
+
+  .status strong {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
